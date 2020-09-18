@@ -1,12 +1,6 @@
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 import pandas as pd
-import numpy as np
 
-#TODO Find better way to display dates
-#TODO make more graphs
-
-#Returns Database of rock climbing data
+#Returns database of rock climbing data
 def generateDatabase():
     #Set file to read from here
     file = 'Climbing Log.csv'
@@ -35,19 +29,10 @@ def sanitizeData(df):
     
     return df
 
-#Generates Boxplot Chart showing distribution of successful ascent grades
-def generateBoxplotChart(df):
-    df = df[df['Success'] == True]
-    df.boxplot(column=['Grade'], by=['Date'])
-    plt.title('Daily Distribution of Successful Ascents')
-    plt.suptitle("")
-    plt.xlabel('Date')
-    plt.ylabel('Grade')
-    plt.ylim(5.0, 5.16)
-    plt.yticks(np.arange(5.0, 5.16, .01))
-    plt.xticks(rotation=15)
-    plt.show()
+#Generates csv file of post-sanitized data
+def returnSanitizedData(df):
+    df.to_csv(r'Climbing Log Sanitized.csv')
     
 db = generateDatabase()
 db = sanitizeData(db)
-generateBoxplotChart(db)
+returnSanitizedData(db)
